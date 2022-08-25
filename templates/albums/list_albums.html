@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p><a href="{% url 'create_album' %}">Add an Album</a></p>
+<h2>Albums</h2>
+    {% for album in albums %}
+<div class="album-detail">
+    <a href="{% url 'album_detail' pk=album.pk %}"> {{ album }} </a>
+</div>
+    {% endfor %}
+{% endblock content %}
