@@ -1,8 +1,7 @@
 from django.db import models
 
+
 # if any changes are made here -> in terminal: python manage.py makemigrations, python manage.py migrate
-
-
 class Album(models.Model):
     title = models.CharField(max_length=200)
     artist = models.CharField(max_length=200)

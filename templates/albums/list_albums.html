@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p><a href="{% url 'create_album' %}">Add an Album</a></p>
-<h2>Albums</h2>
-    {% for album in albums %}
-<div class="album-detail">
-    <a href="{% url 'album_detail' pk=album.pk %}"> {{ album }} </a>
-</div>
+<div class="album-list">
+    <h3><a href="{% url 'create_album' %}">Add an Album</a></h3>
+    <table id="album-table">
+        
+        
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Release Date</th>
+            <th>Details</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        {% for album in albums %}
+        <tr>
+            <td>{{ album.title }}</td>
+            <td>{{ album.artist }}</td>
+            <td>{{ album.release_date }}</td>
+            <td><a href="{% url 'album_detail' album.pk %}">View Details</a></td>
+            <td><a href="{% url 'edit_album' album.pk %}">Edit</a></td>
+            <td><a href="{% url 'delete_album' album.pk %}">Delete</a></td>
+    </tr>
     {% endfor %}
+    </table>
+</div>
+        
 {% endblock content %}

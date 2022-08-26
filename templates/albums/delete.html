@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>Are your sure you want to delete "{{album}}?</p>
+<form method="POST">
+
+
+    <a href="{% url 'list_albums'">Cancel</a>
+    
+    <input type="submit" name="Confirm">
+</form>
+{% endblock content %}

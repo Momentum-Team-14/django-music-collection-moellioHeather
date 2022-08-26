@@ -1,9 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Album
 from .forms import AlbumForm
-from django.shortcuts import redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 
 
 def list_albums(request):
@@ -16,27 +13,34 @@ def album_detail(request, pk):
     return render(request, 'albums/album_detail.html', {'album': album})
 
 
-def create_album(request):
-    if request.method == 'POST':
+def createAlbum(request):
+    form = AlbumForm()
+    if request.method == "POST":
+        # print(request.POST)
         form = AlbumForm(request.POST)
         if form.is_valid():
-            album = form.save()
+            form.save()
             return redirect('list_albums')
-    form = AlbumForm()
-    return render(request, 'albums/create_albums.html', {'form': form})
+
+    context = {'form': form}
+    return render(request, 'albums/create_album.html', context)
 
 
-class AuthorCreate(CreateView):
-    model = Album
-    fields = ['title', 'artist', 'release_date']
+def editAlbum(request, pk):
+
+    album = Album.objects.get(pk=pk)
+    form = AlbumForm(instance=album)
+
+    if request.method == "POST":
+        form = AlbumForm(request.POST, instance=album)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form}
+    return render(request, 'albums/create_album.html', context)
 
 
-class AuthUpdate(UpdateView):
-    model = Album
-    # Not recommended (potential security issue if more fields added)
-    fields = '__all__'
-
-
-class AlbumDelete(DeleteView):
-    model = Album
-    success_url = reverse_lazy('album')
+def deleteAlbum(request, pk):
+    context = {}
+    return render(request, 'albums/delete.html', context)
